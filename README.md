@@ -15,6 +15,38 @@ Verify WSL is installed:
 wsl --status
 ```
 
+#### Typical workflow example:
+
+Create machine:
+```powershell
+.\create-wsl.ps1 -MachineName TestVM
+```
+
+Start/resume the machine:
+```powershell
+wsl -d TestVM
+```
+
+Stop machine:
+```powershell
+wsl --terminate TestVM
+```
+
+Create portable snapshot .tar:
+```powershell
+.\snapshot-wsl.ps1 -MachineName TestVM -BackupName TestVMBackup.tar
+```
+
+Destroy and unregister:
+```powershell
+.\destroy-wsl.ps1 -MachineName TestVM
+```
+
+Restore from .tar:
+```powershell
+.\restore-wsl.ps1 -MachineName TestVM -BackupFile C:\WSL\Backups\TestVMBackup.tar
+```
+
 ### Terminology
 
 - **RootFS**: a base starting Linux filesystem, in the form of a .tar.gz, used to create a new WSL machine.
@@ -24,7 +56,7 @@ wsl --status
 - **MachinePath**: where registered WSL disks (ext4.vhdx files) are stored. Defaults to `C:\WSL\Machines`.
 - **BackupPath**: where portable backup snapshot files (.tar) are stored. Defaults to `C:\WSL\Backups`.
 
-### Example commands
+### Verbose script-call examples
 
 Create a new WSL machine:
 
@@ -35,18 +67,6 @@ Create a new WSL machine:
   -DownloadPath C:\WSL\Images `
   -MachinePath C:\WSL\Machines `
   -DefaultUser dev
-```
-
-Stop running machine:
-
-```powershell
-wsl --terminate MyWSLMachine
-```
-
-Resume running machine:
-
-```powershell
-wsl -d MyWSLMachine
 ```
 
 Export a WSL machine to a .tar backup (survives a destroy):
@@ -93,36 +113,4 @@ C:\WSL
 │   └── ext4.vhdx
 └── Backups
   └── MyWSLBackup.tar
-```
-
-#### Typical workflow example:
-
-Create machine:
-```powershell
-.\create-wsl.ps1 -MachineName TestVM
-```
-
-Start/resume the machine:
-```powershell
-wsl -d TestVM
-```
-
-Stop machine:
-```powershell
-wsl --terminate TestVM
-```
-
-Create portable snapshot .tar:
-```powershell
-.\snapshot-wsl.ps1 -MachineName TestVM -BackupName TestVMBackup.tar
-```
-
-Destroy and unregister:
-```powershell
-.\destroy-wsl.ps1 -MachineName TestVM
-```
-
-Restore from .tar:
-```powershell
-.\restore-wsl.ps1 -MachineName TestVM -BackupFile C:\WSL\Backups\TestVMBackup.tar
 ```
